@@ -16,6 +16,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
     width: 0
   };
   destroySubscriptions$ = new Subject();
+  dragStartCoOrdinates = { pageX: 0, pageY: 0 };
 
   constructor(private dragAndDropService: DragAndDropService) {}
 
@@ -51,29 +52,42 @@ export class PreviewComponent implements OnInit, OnDestroy {
         width,
         height
       };
+      return true;
     } else {
       this.dragAndDropService.innerBoxPositionData.next(
         this.innerBoxPreviousPositionData
       );
+      return false;
     }
   }
 
   dragStarted(event: MouseEvent) {
-    console.log("Drag Started", event);
     event.stopPropagation();
-  }
-
-  dragEnded(event: MouseEvent) {
-    console.log("Drag Ended", event);
-    event.stopPropagation();
+    this.dragStartCoOrdinates.pageX = event.pageX;
+    this.dragStartCoOrdinates.pageY = event.pageY;
   }
 
   dropped(event: MouseEvent) {
-    console.log("Dropped", event);
     event.stopPropagation();
-    const innerBoxElement = document.querySelector(".inner-box") as HTMLElement;
-    innerBoxElement.setAttribute("screenX", `${event.screenX}`);
-    innerBoxElement.setAttribute("screenY", `${event.screenY}`);
+    let xCoOrdinate, yCoOrdinate;
+    xCoOrdinate =
+      this.innerBoxPreviousPositionData.xCoOrdinate +
+      (event.pageX - this.dragStartCoOrdinates.pageX);
+    yCoOrdinate =
+      this.innerBoxPreviousPositionData.yCoOrdinate -
+      (event.pageY - this.dragStartCoOrdinates.pageY);
+    console.log(xCoOrdinate, yCoOrdinate);
+    if (
+      this.repositionInnerBox({
+        ...this.innerBoxPreviousPositionData,
+        xCoOrdinate,
+        yCoOrdinate
+      })
+    ) {
+      this.dragAndDropService.innerBoxPositionData.next(
+        this.innerBoxPreviousPositionData
+      );
+    }
   }
 
   ngOnDestroy(): void {
