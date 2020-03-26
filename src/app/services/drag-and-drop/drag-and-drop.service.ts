@@ -6,8 +6,8 @@ import { BehaviorSubject } from "rxjs";
 })
 export class DragAndDropService {
   innerBoxPositionData = new BehaviorSubject({
-    xCoOrdinate: 10,
-    yCoOrdinate: 10,
+    xCoOrdinate: 200,
+    yCoOrdinate: 100,
     height: 20,
     width: 20
   });
