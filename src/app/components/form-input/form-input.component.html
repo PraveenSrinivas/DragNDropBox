@@ -1,0 +1,12 @@
+<label class="card-title">INPUT</label>
+<form class="flex-column">
+    <label class="input-label flex-row" for="X-Coordinate">X Coordinate</label>
+    <input #xCoOrdinateInput class="input-field flex-row" name="X-Coordinate" min=0 type="number" [value]="innerBoxPositionData.xCoOrdinate" (change)="updateInnerBoxPositionData('xCoOrdinate',xCoOrdinateInput.value)" />
+    <label class="input-label flex-row" for="Y-Coordinate">Y Coordinate</label>
+    <input #yCoOrdinateInput class="input-field flex-row" name="Y-Coordinate" min=0 type="number" [value]="innerBoxPositionData.yCoOrdinate" (change)="updateInnerBoxPositionData('yCoOrdinate',yCoOrdinateInput.value)" />
+    <label class="input-label flex-row" for="Width">Width</label>
+    <input #widthInput class="input-field flex-row" name="Width" min=0 type="number" [value]="innerBoxPositionData.width" (change)="updateInnerBoxPositionData('width',widthInput.value)" />
+    <label class="input-label flex-row" for="Height">Height</label>
+    <input #heightInput class="input-field flex-row" name="Height" min=0 type="number" [value]="innerBoxPositionData.height" (change)="updateInnerBoxPositionData('height',heightInput.value)" />
+    <p>Any value entered in the above feilds will be reflected in the Preview only if the resultant Inner box is within the Outer box else the values will be reset to previous valid values</p>
+</form>
